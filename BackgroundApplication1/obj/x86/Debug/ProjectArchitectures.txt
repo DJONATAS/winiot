@@ -1,0 +1,1 @@
+C:\temp\teste001\BackgroundApplication1\BackgroundApplication1\BackgroundApplication1.csproj;x86

@@ -1,0 +1,138 @@
+﻿
+<br /><br />
+
+
+<div class="page-header">
+    <h1>Windows 10 IoT <small> Djonatas Tenfen</small></h1>
+</div>
+
+<div class="jumbotron">
+
+    <div class="row">
+        <button onclick="LigarLampada()" class="btn btn-primary" style="width: 100%">
+            <img src="http://windowsiot.com.br/imagens/lampada.svg" width="48" /> <strong>Lâmpada</strong>
+        </button>
+    </div>
+    <br />
+    <div class="row">
+        <button onclick="LigarSirene()" class="btn btn-primary" style="width: 100%">
+            <img src="http://windowsiot.com.br/imagens/buzzer.svg" width="48" /> <strong>Alarme</strong>
+        </button>
+    </div>
+    <br />
+    <div class="row">
+        <button onclick="LigarTomada()" class="btn btn-primary" style="width: 100%">
+            <img src="http://windowsiot.com.br/imagens/tomada.svg" width="48" /> <strong>Tomada</strong>
+        </button>
+    </div>
+    <br />
+
+
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            Medições
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-sm-6 col-md-4">
+                    <div class="thumbnail">
+                        <img src="http://windowsiot.com.br/imagens/lampada.svg" width="128" alt="Lâmpada">
+                        <div class="caption">
+                            <center>
+                                <h3>Lâmpada</h3>
+                                <div id="nLampada"></div>
+                                <p> <button onclick="atualizarLampada()" class="btn btn-primary" style="width: 100%">Atualizar</button></p>
+                            </center>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-4">
+                    <div class="thumbnail">
+                        <img src="http://windowsiot.com.br/imagens/buzzer.svg" width="128" alt="Alarme">
+                        <div class="caption">
+                            <center>
+                                <h3>Alarme</h3>
+                                <div id="nSirene"></div>
+                                <p> <button onclick="atualizarSirene()" class="btn btn-primary" style="width: 100%">Atualizar</button></p>
+                            </center>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-4">
+                    <div class="thumbnail">
+                        <img src="http://windowsiot.com.br/imagens/tomada.svg" width="128" alt="tomada">
+                        <div class="caption">
+                            <center>
+                                <h3>Tomada</h3>
+                                <div id="nTomada"></div>
+                                <p> <button onclick="atualizarTomada()" class="btn btn-primary" style="width: 100%">Atualizar</button></p>
+                            </center>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+
+    var lampada = 0;
+    var executou = false;
+
+    function LigarTomada(){
+        $.post("../api/Tomada");
+        atualizarTodos();
+    }
+
+    function LigarLampada(){
+        $.post("../api/Lampada");
+        atualizarTodos();
+    }
+
+    function LigarSirene(){
+        $.post("../api/Sirene");
+        atualizarTodos();
+    }
+
+    function atualizarTomada(){
+        $.get( "../api/Tomada/Count", function( data ) {
+            $('#nTomada').text( data );
+        });
+    }
+
+    function atualizarSirene(){
+        $.get( "../api/Sirene/Count", function( data ) {
+            $('#nSirene').text( data );
+        });
+    }
+
+    function atualizarLampada(){
+        $.get( "../api/Lampada/Count", function( data ) {
+            lampada = data;
+            verificarLampada();
+            $('#nLampada').text( data );
+        });
+    }
+
+    function atualizarTodos(){
+        atualizarTomada();
+        atualizarSirene();
+        atualizarLampada();
+    }
+
+    function verificarLampada(){
+        if (lampada == 5 && !executou){
+            $.post("../api/Sirene");
+            executou = true;
+        }
+
+        if (lampada == 6 && executou){
+            $.post("../api/Sirene");
+
+        }
+    }
+</script>
+
+
