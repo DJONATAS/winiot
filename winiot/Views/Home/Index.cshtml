@@ -80,22 +80,19 @@
 
 <script type="text/javascript">
 
-    var lampada = 0;
-    var executou = false;
-
     function LigarTomada(){
         $.post("../api/Tomada");
-        atualizarTodos();
+        atualizarTomada();
     }
 
     function LigarLampada(){
         $.post("../api/Lampada");
-        atualizarTodos();
+        atualizarLampada();
     }
 
     function LigarSirene(){
         $.post("../api/Sirene");
-        atualizarTodos();
+        atualizarSirene();
     }
 
     function atualizarTomada(){
@@ -112,27 +109,19 @@
 
     function atualizarLampada(){
         $.get( "../api/Lampada/Count", function( data ) {
-            lampada = data;
-            verificarLampada();
+            verificarLampada(data);
             $('#nLampada').text( data );
         });
     }
 
-    function atualizarTodos(){
-        atualizarTomada();
-        atualizarSirene();
-        atualizarLampada();
-    }
+    function verificarLampada(valor){
+        if (valor == 0) return;
 
-    function verificarLampada(){
-        if (lampada == 5 && !executou){
+        var result = valor % 5;
+
+        if (result == 0){
             $.post("../api/Sirene");
-            executou = true;
-        }
-
-        if (lampada == 6 && executou){
-            $.post("../api/Sirene");
-
+            atualizarSirene();
         }
     }
 </script>

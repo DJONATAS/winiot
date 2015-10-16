@@ -208,6 +208,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LampadaController.cs" />
+    <Compile Include="Controllers\ResetController.cs" />
     <Compile Include="Controllers\SireneController.cs" />
     <Compile Include="Controllers\TomadaController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />

@@ -1,1 +1,7 @@
 /winiot/bin
+/winiot/obj/
+/BackgroundApplication1/obj/
+/BackgroundApplication1/bin/
+*.pdb
+*.dll
+*.suo
